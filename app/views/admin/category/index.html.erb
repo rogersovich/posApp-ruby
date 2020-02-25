@@ -1,0 +1,118 @@
+<%= render 'layouts/element/navbar' %>
+
+<div class="header bg-gradient-success pb-8 pt-5 pt-md-8">
+</div>
+
+<div class="container-fluid mt-5 mb-5">
+
+    <h1 class="text-danger">roger</h1>
+
+    <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-1">
+                <div class="row">
+                    <div class="col-8">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-links" style="background:none;">
+                                <li class="breadcrumb-item">
+                                    <a href="#">
+                                        <i class="fa fa-home text-success"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Floor
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-4 text-right">
+                        <%= link_to new_admin_category_path, {:class => 'btn btn-success'} do %>
+                            tambah
+                            <span class="btn-inner--icon">
+                                <i class="fa fa-plus"></i>
+                            </span>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive p-3">
+              <table class="table align-items-center table-flush" id="data-table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% no = 1 %>
+                    <% @categories.each do |c| %>
+                        <tr>
+                            <td>
+                            <%= no %>
+                            </td>
+                            <td>
+                                <%= c.name %> 
+                            </td>
+                            <td>
+                                
+                                <%= link_to "edit", edit_admin_category_path(c), :class => 'badge badge-pill badge-success' %>
+                                
+                                <%= link_to "delete", "javascript:;", {
+                                    :class => "badge badge-pill badge-danger btn-delete",
+                                    :data => { :id => admin_category_destroy_path(c)}} 
+                                %>
+                                
+                            </td>
+                        </tr>
+                        <% no +=1 %>
+                    <% end %>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+                
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function(){
+
+        $('.btn-delete').on('click', function() {
+            
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1aae6f',
+                cancelButtonColor: '#f80031',
+                confirmButtonText: 'Yes, df80031elete it!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    var data = $(this).data('id')
+                    window.location = data;
+                }else{
+                    Swal.fire(
+                    'Cancelled!',
+                    'Your file has been cancel.',
+                    'error'
+                    )
+                }
+            })
+        })
+
+        $('#data-table').DataTable({
+            paging: false,
+        });
+
+
+    })
+</script>

@@ -1,0 +1,9 @@
+<div class="container mt-5">
+<%= form_for @edit, url: {action: 'update'} do |f| %>
+    <h2><%= @edit.product.name %></h2>
+    <%= f.label :qty %>
+    <%= f.text_field :qty, {:class => 'form-control'} %>
+    <br>
+    <%= f.submit "Update", {:class => 'btn btn-primary'} %>
+<% end %>
+</div>

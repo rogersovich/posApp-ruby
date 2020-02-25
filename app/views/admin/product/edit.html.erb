@@ -1,0 +1,16 @@
+<div class="container mt-5">
+    <%= form_for @edit, url: {action: 'update'} do |f| %>
+        <%= f.label :name %>
+        <%= f.text_field :name, {:class => 'form-control'} %>
+        <%= f.label :harga %>
+        <%= f.text_field :harga, {:class => 'form-control'} %>
+        <%= f.label :stok %>
+        <%= f.text_field :stok, {:class => 'form-control'} %>
+        <%= f.label :category_id %>
+        <%= f.select :category_id, Category.all.collect {|c| [c.name, c.id]}, {:include_blank => 'Pilih category'}, class: 'form-control'  %>
+        <%= f.label :unit_id %>
+        <%= f.select :unit_id, Unit.all.collect {|c| [c.name, c.id]}, {:include_blank => 'Pilih satuan'}, class: 'form-control'  %>
+        <br>
+        <%= f.submit "Create", {:class => 'btn btn-primary'} %>
+    <% end %>
+    </div>

@@ -1,0 +1,153 @@
+<%= render 'layouts/element/navbar' %>
+
+<div class="header bg-gradient-success pb-8 pt-5 pt-md-8">
+</div>
+
+<div class="container-fluid mt-5 mb-5">
+
+
+    <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-1">
+                <div class="row">
+                    <div class="col-8">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-links" style="background:none;">
+                                <li class="breadcrumb-item">
+                                    <a href="#">
+                                        <i class="fa fa-home text-success"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Floor
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-4 text-right">
+                        <%= link_to new_admin_product_path, {:class => 'btn btn-success'} do %>
+                            tambah
+                            <span class="btn-inner--icon">
+                                <i class="fa fa-plus"></i>
+                            </span>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            
+            <%= form_tag :action => 'pesen' do %>
+            <div class="table-responsive p-3">
+              <table class="table align-items-center table-flush" id="data-table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Pesen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% no = 1 %>
+                    <% @products.each do |c| %>
+                        <tr>
+                            <td>
+                            <%= no %>
+                            </td>
+                            <td>
+                                <%= c.name %> 
+                            </td>
+                            <td>
+                                <%= c.harga %> 
+                            </td>
+                            <td>
+                                <%= c.stok %> 
+                            </td>
+                            <td>
+                                <%= c.unit.name %> 
+                            </td>
+                            <td>
+                                <%= c.category.name %> 
+                            </td>
+                            <td>
+                                
+                                <%= link_to "edit", edit_admin_product_path(c), :class => 'badge badge-pill badge-success' %>
+                                
+                                <%= link_to "delete", "javascript:;", {
+                                    :class => "badge badge-pill badge-danger btn-delete",
+                                    :data => { :id => admin_product_destroy_path(c)}} 
+                                %>
+                                
+                            </td>
+                            <td>
+                                <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                    <input class="custom-control-input check-class" id="check-<%= c.id %>" name="pesen[]" value="<%= c.id %>" type="checkbox">
+                                    <label class="custom-control-label text-warning font-weight-bold pt-1" for="check-<%= c.id %>">
+                                        Pesen
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <% no +=1 %>
+                    <% end %>
+                </tbody>
+              </table>
+              <br>
+              <%= submit_tag "Submit", class: "btn btn-primary text-right" %>
+              <% end %>
+              
+            </div>
+            <div class="card-footer py-4">
+                
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function(){
+
+        $('.check-class').on('change', function(){
+            var check = $(this).prop('checked');
+            var val = $(this).val()
+        });
+
+        $('.btn-delete').on('click', function() {
+            
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1aae6f',
+                cancelButtonColor: '#f80031',
+                confirmButtonText: 'Yes, df80031elete it!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    var data = $(this).data('id')
+                    window.location = data;
+                }else{
+                    Swal.fire(
+                    'Cancelled!',
+                    'Your file has been cancel.',
+                    'error'
+                    )
+                }
+            })
+        })
+
+        $('#data-table').DataTable({
+            paging: false,
+        });
+
+
+    })
+</script>

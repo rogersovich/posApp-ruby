@@ -1,0 +1,33 @@
+
+<div class="container mt-5">
+    <%= form_tag :action => 'order' do |f| %>
+    <div class="row">
+        <% @sea.each do |s| %>  
+            <div class="col-md-3">
+                <%= label_tag(:name, "Nama Produk") %>
+                <%= text_field_tag :name, s.name, class: 'form-control', :readonly => true %>
+            </div>
+            <div class="col-md-3">
+                <%= label_tag(:harga, "Harga") %>
+                <%= text_field_tag :harga, s.harga, class: 'form-control', :readonly => true %>
+                
+            </div>
+            <div class="col-md-2">
+                <%= label_tag(:stok, "Stok") %>
+                <%= text_field_tag :stok, s.stok, class: 'form-control', :readonly => true %>
+            </div>
+            <div class="col-md-4">
+                <%= label_tag(:pesen, "Pesen") %>
+                <input type="hidden" value="<%= s.id %>" name="pesen[<%= s.id %>][id]">
+                <input type="text" name="pesen[<%= s.id %>][qty]" class="form-control"> 
+                
+
+                <!-- <label>Jumlah Pesanan</label>
+                <input type="text" value="" class="form-control"> -->
+            </div>
+        <% end %>
+    </div>
+    <br>
+    <%= submit_tag "Selesai", class: "btn btn-primary" %>
+    <% end %>
+</div>

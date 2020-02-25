@@ -1,0 +1,135 @@
+<%= render 'layouts/element/navbar' %>
+
+<div class="header bg-gradient-success pb-8 pt-5 pt-md-8">
+</div>
+
+<div class="container-fluid mt-5 mb-5">
+
+    <div class="row">
+        <div class="col">
+          <div class="card shadow">
+
+            <div class="table-responsive p-3">
+              <table class="table align-items-center table-flush" id="data-table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama Produk</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Jumlah</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% total = [] %>
+                    <% no = 1 %>
+                    <% @carts.each do |c| %>
+                        <tr>
+                            <td>
+                            <%= no %>
+                            </td>
+                            <td>
+                                <%= c.product.name %> 
+                            </td>
+                            <td>
+                                <%= c.product.harga %> 
+                            </td>
+                            <td>
+                                <%= c.qty %> 
+                            </td>
+                            <td>
+                                <%= c.qty * c.product.harga %> 
+                                <% total.push(c.qty * c.product.harga)  %>
+                            </td>
+                            <td>
+                                
+                                <%= link_to "edit", edit_admin_cart_path(c), :class => 'badge badge-pill badge-success' %>
+                                
+                                <%= link_to "cancel", "javascript:;", {
+                                    :class => "badge badge-pill badge-danger btn-delete",
+                                    :data => { :id => admin_cart_destroy_path(c)}} 
+                                %>
+                                
+                            </td>
+                        </tr>
+                        <% no +=1 %>
+                    <% end %>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-md-6">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    
+                                    <%= form_for @proses, url: {action: 'proses'} do |f| %>
+                                    <div class="row">
+                                       
+                                        <div class="col-md-3 pt-2">
+                                            <%= label_tag(:total) %>
+                                        </div>
+                                        <div class="col-md-9 pb-2">
+                                            <%= text_field_tag(:total, total.sum, class: 'form-control', readonly: true) %>
+                                        </div>
+                                        
+                                        <div class="col-md-3 pt-2">
+                                            <%= label_tag(:bayar, "Uang") %>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <%= text_field_tag(:bayar, '', class: 'form-control', required: true, autofocus: true) %>
+                                        </div>
+                                        <div class="col pt-3 text-right">
+                                        <%= f.submit "Selesai", class: 'btn btn-primary btn-sm' %>
+                                        </div>
+                                    </div>
+                                    <% end %>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+
+        $('.btn-delete').on('click', function() {
+            
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1aae6f',
+                cancelButtonColor: '#f80031',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    var data = $(this).data('id')
+                    window.location = data;
+                }else{
+                    Swal.fire(
+                    'Cancelled!',
+                    'Your file has been cancel.',
+                    'error'
+                    )
+                }
+            })
+        })
+
+       
+    })
+</script>

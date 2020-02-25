@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FirstApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+  
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'dataTables.bootstrap4.min', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <%= javascript_include_tag 'jquery-3', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'sweetalert2.all', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'jquery.dataTables.min', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'dataTables.bootstrap4.min', media: 'all', 'data-turbolinks-track': 'reload' %>
+    
+  </head>
+
+  <body>
+    <%= render 'layouts/element/sidebar' %>
+    <div class="main-content">
+      <%= yield %>
+    </div>
+  </body>
+</html>
