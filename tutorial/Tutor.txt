@@ -1,0 +1,73 @@
+Pertama:
+*yg kemaren tuh baru sampe mau nambahin keranjang ya
+
+<td>
+  	<div class="custom-control custom-control-alternative custom-checkbox mb-3">
+      		<input class="custom-control-input check-class" id="check-<%= c.id %>" name="pesen[]" value="<%= c.id %>" type="checkbox">
+              	<label class="custom-control-label text-warning font-weight-bold pt-1" for="check-<%= c.id %>">
+            		Pesen
+             	</label>	
+	</div>
+</td>
+
+fungsi ini adalah buat nambah combobox di setiap tdnya
+
+lalu ->
+
+selimuti tag tablenya dengan form
+
+<%= form_tag :action => 'pesen' do %>
+
+<%= submit_tag "Submit", class: "btn btn-primary text-right" %>
+<% end %>
+
+itu fungsinya buat form yang nnti action mau kemana tuh
+maksudnya tuh kan kita lagi berada di wilayah si product ya nah jadi kita harus bikin function yang namanya
+'pesen' di controller product
+
+submit tag adalah magic dari rails buat bikin button
+
+lalu -> di masih di viewnya
+
+tambahkan di jsnya
+
+ $('.check-class').on('change', function(){
+            var check = $(this).prop('checked');
+            var val = $(this).val()
+        });
+itu fungsinya kalo kita pencet si comboboxnya nnti dia true si attribut checkednya
+memang ga terlalu ngefek ini mah tpi nnti kalo mau di custom ini kepake
+
+lalu -> pindah ke route
+
+tambah ini di route
+
+post '/product/pesen', to: 'product#pesen', as: 'product_pesen'
+
+lalu -> pindah ke controller
+
+def pesen
+        @params = params[:pesen]
+        tampung = []
+        
+        @params.each do |s|
+            
+            
+            @product = Product.find(s)
+            tampung.push(@product)
+            
+        end
+
+        @tampung = tampung
+    end
+
+
+fungsina ieu:
+@params itu bakal nampung semua data yang gua kirim dari view
+sebenernya kita tuh udah ngepost ke controller tapi ga keliatan aja datanya dan adanya di variabel 'params'
+makanya gua panggil variabelnya yg namanya params terus yang nama keynya pesen (params[:pesen])
+terus bikin variabel tampung
+terus di each aja si variabel @params
+
+
+

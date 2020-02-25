@@ -9,17 +9,17 @@ class Admin::ProductController < ApplicationController
 
     def pesen
         @params = params[:pesen]
-        sea = []
+        tampung = []
         
         @params.each do |s|
             
             
             @product = Product.find(s)
-            sea.push(@product)
+            tampung.push(@product)
             
         end
 
-        @sea = sea
+        @tampung = tampung
     end
 
     def order

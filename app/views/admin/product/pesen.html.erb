@@ -2,7 +2,7 @@
 <div class="container mt-5">
     <%= form_tag :action => 'order' do |f| %>
     <div class="row">
-        <% @sea.each do |s| %>  
+        <% @tampung.each do |s| %>  
             <div class="col-md-3">
                 <%= label_tag(:name, "Nama Produk") %>
                 <%= text_field_tag :name, s.name, class: 'form-control', :readonly => true %>
